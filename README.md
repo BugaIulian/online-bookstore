@@ -6,11 +6,14 @@ It is developed using the Spring Framework for building web applications, Lombok
 and Spring Validation for data validation.
 
 Authors
+
 Andrei Gabriel Tudor, Andreea Roman, Buga Iulian, Tiberiu Cristian Martin and Razvan-Ionut Trofin.
 
 Contributing
+
 We welcome contributors to this project. If you would like to contribute, please fork the repository, make your changes
 and please submit a pull request.
 
 Licence
+
 N/A
