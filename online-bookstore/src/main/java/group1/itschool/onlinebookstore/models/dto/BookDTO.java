@@ -5,6 +5,20 @@ import lombok.Data;
 @Data
 public class BookDTO {
 
-    private String name;
-    private String category;
+    private String title;
+    private String author;
+    private String publisher;
+    private int publicationDate;
+    private int codeISBN;
+    private String genre;
+    private String synopsis;
+    private String coverDesign;
+    private int pageCount;
+    private String language;
+    private String format;
+    private double price;
+    private String review;
+    private String QRCode;
+
+
 }
