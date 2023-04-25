@@ -26,7 +26,7 @@ public class BookEntity {
     @Column(name = "publication_date")
     private LocalDate publicationDate;
     @Column(name = "isbn_code")
-    private int codeISBN;
+    private long codeISBN;
     @Column(name = "genre")
     private String genre;
     @Column(name = "synopsis")
@@ -44,7 +44,7 @@ public class BookEntity {
     @Column(name = "review")
     private String review;
     @Column(name = "qr_code")
-    private String QRCode;
+    private String qrcode;
     @Column(name = "inventory")
     private int inventory;
 }
