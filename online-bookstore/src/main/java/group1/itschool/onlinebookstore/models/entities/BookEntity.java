@@ -6,10 +6,10 @@ import lombok.Data;
 
 import java.time.LocalDate;
 
-@Entity
 @Data
-@Table(name = "books")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Entity
+@Table(name = "books")
 public class BookEntity {
 
     /** Some fields may be erased later in the process of building the app for a better query performance, we will decide later which ones.*/
