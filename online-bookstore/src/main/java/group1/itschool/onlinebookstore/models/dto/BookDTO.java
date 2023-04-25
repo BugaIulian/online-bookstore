@@ -35,7 +35,7 @@ public class BookDTO {
     @Size(min = 5, max = 10000, message = "The minimum page count is 5 and the maximum is 10.000 pages for a book.")
     private int pageCount;
     @NotNull
-    @Min(value = 1, message = "Value must greater equal to 1.")
+    @Min(value = 1, message = "Value must greater or equal to 1.")
     private String language;
     @NotNull
     private String format;
@@ -46,4 +46,7 @@ public class BookDTO {
     @NotBlank
     @Pattern(regexp = "^\\\\d{6}$")
     private String QRCode;
+    @NotNull
+    @Min(value = 0, message = "The number of specific books in the library, 0 means it's out of stock")
+    private int inventory;
 }
