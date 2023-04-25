@@ -44,7 +44,7 @@ public class BookEntity {
     @Column(name = "review")
     private String review;
     @Column(name = "qr_code")
-    private String qrcode;
+    private String qrCode;
     @Column(name = "inventory")
     private int inventory;
 }
