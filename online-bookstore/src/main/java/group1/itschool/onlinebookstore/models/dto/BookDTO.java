@@ -45,7 +45,7 @@ public class BookDTO {
     private String review;
     @NotBlank
     @Pattern(regexp = "^\\\\d{6}$")
-    private String QRCode;
+    private String qrCode;
     @NotNull
     @Min(value = 0, message = "The number of specific books in the library, 0 means it's out of stock")
     private int inventory;

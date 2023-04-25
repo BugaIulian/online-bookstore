@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
  * This comment will be erased once the pull requests is approved.
  */
 
-@Repository
-public interface UserRepository extends JpaRepository<UserEntity, Long> {
-}
+//@Repository
+//public interface UserRepository extends JpaRepository<UserEntity, Long> {
+//}
