@@ -26,7 +26,7 @@ public class BookEntity {
     @Column(name = "publication_date")
     private LocalDate publicationDate;
     @Column(name = "isbn_code")
-    private long codeISBN;
+    private String codeISBN;
     @Column(name = "genre")
     private String genre;
     @Column(name = "synopsis")
