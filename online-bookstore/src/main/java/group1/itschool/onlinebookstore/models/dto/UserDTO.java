@@ -24,7 +24,6 @@ public class UserDTO implements Serializable {
     @Past(message = "Date of birth should be in the past")
     private LocalDate dateOfBirth;
     @NotNull
-    @Min(value = 50, message = "Interests maximum 50 characters")
     private String interests;
     @NotNull
     private LocalDate accountCreationDate;

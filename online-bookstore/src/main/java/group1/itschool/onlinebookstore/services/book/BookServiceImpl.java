@@ -1,4 +1,4 @@
-package group1.itschool.onlinebookstore.services;
+package group1.itschool.onlinebookstore.services.book;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import group1.itschool.onlinebookstore.models.dto.BookDTO;

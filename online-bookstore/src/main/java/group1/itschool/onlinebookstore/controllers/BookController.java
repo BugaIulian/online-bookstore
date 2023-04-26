@@ -1,7 +1,7 @@
 package group1.itschool.onlinebookstore.controllers;
 
 import group1.itschool.onlinebookstore.models.dto.BookDTO;
-import group1.itschool.onlinebookstore.services.BookService;
+import group1.itschool.onlinebookstore.services.book.BookService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

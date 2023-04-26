@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
  * This comment will be erased once the pull requests is approved.
  */
 @Repository
-public interface AuthorRepository extends JpaRepository<AuthorEntity, Long> {
+public interface AuthorRepository extends JpaRepository<AuthorEntity,Long> {
 
     @Query
     AuthorEntity findByName(String name);
