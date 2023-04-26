@@ -8,4 +8,5 @@ import java.io.Serializable;
 public class OrderDTO implements Serializable {
 
     private String productName;
+
 }
