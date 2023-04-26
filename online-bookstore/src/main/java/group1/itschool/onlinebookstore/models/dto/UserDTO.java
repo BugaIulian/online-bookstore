@@ -6,10 +6,11 @@ import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Data
-public class UserDTO {
+public class UserDTO implements Serializable {
 
     @NotNull
     @Size(min = 4, max = 20, message = "Username must be between 4 and 20 characters")

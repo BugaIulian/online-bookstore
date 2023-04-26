@@ -7,9 +7,10 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 
-@Data
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Entity
-@Table(name = "users")
-public class UserEntity {
-}
+//@Data
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@Entity
+//@Table(name = "users")
+//public class UserEntity {
+//
+//}
