@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Data
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
@@ -24,5 +27,5 @@ public class UserEntity {
     @Column(name = "interests")
     private String interests;
     @Column(name = "accountCreationDate")
-    private String accountCreationDate;
+    private LocalDate accountCreationDate;
 }

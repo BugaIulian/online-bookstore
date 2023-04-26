@@ -10,16 +10,20 @@ import java.time.LocalDate;
 public class BookDTO implements Serializable {
 
     @NotNull
+    @NotEmpty
     @Size(min = 2, max = 100, message = "Should contain between 2 and 100 letters.")
     private String title;
     @NotNull
+    @NotEmpty
     private AuthorDTO author;
     @NotNull
+    @NotEmpty
     @Size(min = 2, max = 50, message = "Should contain between 2 and 50 letters.")
     private String publisher;
     @PastOrPresent
     private LocalDate publicationDate;
     @NotNull
+    @NotEmpty
     private String codeISBN;
     @NotNull
     private Genre genre;
@@ -40,6 +44,7 @@ public class BookDTO implements Serializable {
     @NotBlank
     private String qrCode;
     @NotNull
+    @NotEmpty
     @Min(value = 0, message = "The number of specific books in the library, 0 means it's out of stock")
     private int inventory;
 

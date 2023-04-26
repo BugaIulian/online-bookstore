@@ -1,9 +1,6 @@
 package group1.itschool.onlinebookstore.models.dto;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,11 +10,14 @@ import java.time.LocalDate;
 public class UserDTO implements Serializable {
 
     @NotNull
+    @NotEmpty
     @Size(min = 4, max = 20, message = "Username must be between 4 and 20 characters")
     private String username;
     @NotNull(message = "Email is a mandatory field")
+    @NotEmpty(message = "Email can't be empty")
     private String email;
     @NotNull
+    @NotEmpty
     @Size(max = 100, message = "Full name must be less than or equal to 100 characters")
     private String fullName;
     @NotNull
@@ -25,6 +25,6 @@ public class UserDTO implements Serializable {
     private LocalDate dateOfBirth;
     @NotNull
     private String interests;
-    @NotNull
+
     private LocalDate accountCreationDate;
 }
