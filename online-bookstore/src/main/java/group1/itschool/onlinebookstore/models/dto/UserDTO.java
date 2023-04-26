@@ -25,6 +25,5 @@ public class UserDTO implements Serializable {
     private LocalDate dateOfBirth;
     @NotNull
     private String interests;
-
     private LocalDate accountCreationDate;
 }
