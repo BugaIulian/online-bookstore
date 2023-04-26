@@ -5,15 +5,15 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "orders", uniqueConstraints = {@UniqueConstraint(columnNames = "name")})
+@Table(name = "orders")
 public class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(name = "product_name")
     private String productName;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+    //@ManyToOne(fetch = FetchType.LAZY)
+   // @JoinColumn(name = "user_id")
+    //private UserEntity user;
 }
