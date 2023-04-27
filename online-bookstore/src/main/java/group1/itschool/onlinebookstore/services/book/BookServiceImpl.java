@@ -6,7 +6,7 @@ import group1.itschool.onlinebookstore.models.entities.AuthorEntity;
 import group1.itschool.onlinebookstore.models.entities.BookEntity;
 import group1.itschool.onlinebookstore.repositories.AuthorRepository;
 import group1.itschool.onlinebookstore.repositories.BookRepository;
-import group1.itschool.onlinebookstore.util.BookNotFoundException;
+import group1.itschool.onlinebookstore.util.exceptions.BookNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDTO updateBookById(Long id, BookDTO bookDTO) {
         BookEntity editedBook = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException("Book not found with id: " + id));
-        updateFields(bookDTO, editedBook);
+        updateBookFields(bookDTO, editedBook);
         BookEntity editedBookSaved = bookRepository.save(editedBook);
         return objectMapper.convertValue(editedBookSaved, BookDTO.class);
     }
@@ -79,7 +79,7 @@ public class BookServiceImpl implements BookService {
      * This comment is subject to be erased later in the process of building the app.
      */
 
-    private void updateFields(BookDTO bookDTO, BookEntity editedBook) {
+    private void updateBookFields(BookDTO bookDTO, BookEntity editedBook) {
         editedBook.setTitle(bookDTO.getTitle());
         //editedBook.setAuthor(bookDTO.getAuthor());
         editedBook.setPublisher(bookDTO.getPublisher());

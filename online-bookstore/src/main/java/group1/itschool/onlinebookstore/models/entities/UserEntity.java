@@ -3,9 +3,7 @@ package group1.itschool.onlinebookstore.models.entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -23,7 +21,7 @@ public class UserEntity {
     @Column(name = "fullName")
     private String fullName;
     @Column(name = "dateOfBirth")
-    private String dateOfBirth;
+    private LocalDate dateOfBirth;
     @Column(name = "interests")
     private String interests;
     @Column(name = "accountCreationDate")
