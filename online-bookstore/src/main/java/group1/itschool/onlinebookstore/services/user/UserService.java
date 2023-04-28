@@ -1,15 +1,20 @@
 package group1.itschool.onlinebookstore.services.user;
 
+import group1.itschool.onlinebookstore.models.dto.Auth.LoginRequestDTO;
+import group1.itschool.onlinebookstore.models.dto.Auth.RegisterRequestDTO;
 import group1.itschool.onlinebookstore.models.dto.UserDTO;
+
 import java.util.List;
 
 public interface UserService {
 
-    UserDTO createUser(UserDTO userDTO);
+    RegisterRequestDTO registerUser(RegisterRequestDTO registerRequestDTO);
+
+    LoginRequestDTO userLogin(LoginRequestDTO loginRequestDTO);
 
     List<UserDTO> getUsers();
 
-    UserDTO updateUserById(Long id, UserDTO userDTO);
+    UserDTO createUserProfile(Long id, UserDTO userDTO);
 
     void deleteUserById(Long id);
 }

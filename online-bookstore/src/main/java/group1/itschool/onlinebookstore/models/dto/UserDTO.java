@@ -18,12 +18,10 @@ public class UserDTO implements Serializable {
     private String email;
     @NotNull
     @NotEmpty
-    @Size(max = 100, message = "Full name must be less than or equal to 100 characters")
     private String fullName;
     @NotNull
     @Past(message = "Date of birth should be in the past")
     private LocalDate dateOfBirth;
     @NotNull
     private String interests;
-    private LocalDate accountCreationDate;
 }

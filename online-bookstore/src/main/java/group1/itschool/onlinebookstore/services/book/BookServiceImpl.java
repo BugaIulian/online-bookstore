@@ -1,12 +1,12 @@
 package group1.itschool.onlinebookstore.services.book;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import group1.itschool.onlinebookstore.exceptions.book.BookNotFoundException;
 import group1.itschool.onlinebookstore.models.dto.BookDTO;
 import group1.itschool.onlinebookstore.models.entities.AuthorEntity;
 import group1.itschool.onlinebookstore.models.entities.BookEntity;
 import group1.itschool.onlinebookstore.repositories.AuthorRepository;
 import group1.itschool.onlinebookstore.repositories.BookRepository;
-import group1.itschool.onlinebookstore.util.exceptions.BookNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +37,7 @@ public class BookServiceImpl implements BookService {
     public List<BookDTO> getBooks() {
         List<BookEntity> libraryStock = bookRepository.findAll();
         List<BookDTO> libraryStockDTO = new ArrayList<>();
-        libraryStock.forEach(bookEntity -> {
-            libraryStockDTO.add(objectMapper.convertValue(bookEntity, BookDTO.class));
-        });
+        libraryStock.forEach(bookEntity -> libraryStockDTO.add(objectMapper.convertValue(bookEntity, BookDTO.class)));
         return libraryStockDTO;
     }
 
@@ -51,9 +49,23 @@ public class BookServiceImpl implements BookService {
         return objectMapper.convertValue(editedBookSaved, BookDTO.class);
     }
 
+    /** The method deleteBookById will first check if the book that will be erased has an author that has more than 1 book in the book
+     * library stock, if it has 1 book the book will be erased together with the author from the author table, however if it has more than 1 book,
+     * the numberOfBooks written will decrement by 1, this way the relation between books table and author table will be updated */
+
     @Override
     public void deleteBookById(Long id) {
-        bookRepository.deleteById(id);
+
+        BookEntity targetBookInDb = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException("Book not found with id: " + id));
+        int numberOfBooksWritten = targetBookInDb.getAuthor().getNumberOfBooks();
+        AuthorEntity targetedBookAuthor = targetBookInDb.getAuthor();
+
+        if (numberOfBooksWritten == 1) {
+            bookRepository.deleteById(id);
+        } else {
+            targetedBookAuthor.setNumberOfBooks(numberOfBooksWritten - 1);
+            authorRepository.save(targetedBookAuthor);
+        }
     }
 
     /**
@@ -63,15 +75,19 @@ public class BookServiceImpl implements BookService {
      */
 
     private void checkAuthorDuplicates(BookDTO bookDTO, BookEntity bookToSaveInDB) {
+        int numberOfBooksWritten;
         AuthorEntity author = authorRepository.findByName(bookDTO.getAuthor().getName());
         if (author == null) {
             author = new AuthorEntity();
             author.setName(bookDTO.getAuthor().getName());
+            author.setNumberOfBooks(1);
             bookToSaveInDB.setAuthor(author);
+        } else {
+            numberOfBooksWritten = author.getNumberOfBooks();
+            author.setNumberOfBooks(++numberOfBooksWritten);
         }
         bookToSaveInDB.setAuthor(author);
     }
-
 
     /**
      * This method will call the setters from the BookDTO and input new fields in case the admin wants to update specific books by id from the library.
