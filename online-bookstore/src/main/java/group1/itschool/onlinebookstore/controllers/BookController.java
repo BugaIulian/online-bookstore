@@ -31,7 +31,8 @@ public class BookController {
     }
 
     @DeleteMapping("admin/books/{id}")
-    public void deleteBookById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteBookById(@PathVariable Long id) {
         bookService.deleteBookById(id);
+        return ResponseEntity.noContent().build();
     }
 }

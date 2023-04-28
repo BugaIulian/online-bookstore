@@ -1,16 +1,21 @@
 package group1.itschool.onlinebookstore.services.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import group1.itschool.onlinebookstore.exceptions.user.UserNotFoundException;
+import group1.itschool.onlinebookstore.exceptions.user.UsernameAlreadyExistsException;
+import group1.itschool.onlinebookstore.models.dto.Auth.LoginRequestDTO;
+import group1.itschool.onlinebookstore.models.dto.Auth.RegisterRequestDTO;
 import group1.itschool.onlinebookstore.models.dto.UserDTO;
 import group1.itschool.onlinebookstore.models.entities.UserEntity;
 import group1.itschool.onlinebookstore.repositories.UserRepository;
-import group1.itschool.onlinebookstore.util.exceptions.UserNotFoundException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -23,43 +28,72 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO createUser(UserDTO userDTO) {
-        UserEntity userToBeSaved = objectMapper.convertValue(userDTO, UserEntity.class);
-        userToBeSaved.setAccountCreationDate(LocalDate.now());
-        UserEntity userSaved = userRepository.save(userToBeSaved);
-        UserDTO userDTOReturned = objectMapper.convertValue(userSaved, UserDTO.class);
-        userDTOReturned.setAccountCreationDate(LocalDate.now());
-        return userDTOReturned;
+    public RegisterRequestDTO registerUser(RegisterRequestDTO registerRequestDTO) {
+        try {
+            checkIfUserIsAlreadyRegistered(registerRequestDTO);
+            UserEntity userToBeRegistered = objectMapper.convertValue(registerRequestDTO, UserEntity.class);
+            userToBeRegistered.setAccountCreationDate(LocalDate.now());
+            userToBeRegistered.setPassword(encodePassword(registerRequestDTO.getPassword()));
+            UserEntity userSaved = userRepository.save(userToBeRegistered);
+            return objectMapper.convertValue(userSaved, RegisterRequestDTO.class);
+        } catch (UsernameAlreadyExistsException e) {
+            log.info("Username already in the table");
+            throw new RuntimeException(e);
+        }
+    }
+
+    /** This is due to be done*/
+
+    @Override
+    public LoginRequestDTO userLogin(LoginRequestDTO loginRequestDTO) {
+        return null;
     }
 
     @Override
     public List<UserDTO> getUsers() {
         List<UserEntity> userEntities = userRepository.findAll();
         List<UserDTO> userDTOS = new ArrayList<>();
-        userEntities.forEach(userEntity -> {
-            userDTOS.add(objectMapper.convertValue(userEntity, UserDTO.class));
-        });
+        userEntities.forEach(userEntity -> userDTOS.add(objectMapper.convertValue(userEntity, UserDTO.class)));
         return userDTOS;
     }
 
     @Override
-    public UserDTO updateUserById(Long id, UserDTO userDTO) {
+    public UserDTO createUserProfile(Long id, UserDTO userDTO) {
         UserEntity editedUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
         updateUserFields(userDTO, editedUser);
         UserEntity editedUserSaved = userRepository.save(editedUser);
         return objectMapper.convertValue(editedUserSaved, UserDTO.class);
     }
 
-
     @Override
     public void deleteUserById(Long id) {
+        UserEntity editedUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User to be erased can't be found with the id: " + id));
         userRepository.deleteById(id);
     }
 
     private void updateUserFields(UserDTO userDTO, UserEntity editedUser) {
         editedUser.setUsername(userDTO.getUsername());
+        editedUser.setFullName(userDTO.getFullName());
         editedUser.setEmail(userDTO.getEmail());
         editedUser.setInterests(userDTO.getInterests());
         editedUser.setDateOfBirth(userDTO.getDateOfBirth());
+    }
+
+    private String encodePassword(String password) {
+        return new BCryptPasswordEncoder().encode(password);
+    }
+
+    private void checkIfUserIsAlreadyRegistered(RegisterRequestDTO registerRequestDTO) {
+
+            String username = registerRequestDTO.getUsername();
+            String userEmail = registerRequestDTO.getEmail();
+            UserEntity existingUserUsername = userRepository.findByUsername(username);
+            if (existingUserUsername != null) {
+                throw new UsernameAlreadyExistsException("Username already registered.");
+            }
+            UserEntity existingUserEmail = userRepository.findByEmail(userEmail);
+            if (existingUserEmail != null) {
+                throw new UsernameAlreadyExistsException("Email already registered");
+            }
     }
 }

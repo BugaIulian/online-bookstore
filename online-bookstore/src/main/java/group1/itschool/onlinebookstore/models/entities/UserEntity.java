@@ -16,14 +16,16 @@ public class UserEntity {
     private Long id;
     @Column(name = "username")
     private String username;
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
-    @Column(name = "fullName")
+    @Column(name = "full_name")
     private String fullName;
-    @Column(name = "dateOfBirth")
+    @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
     @Column(name = "interests")
     private String interests;
-    @Column(name = "accountCreationDate")
+    @Column(name = "account_creation_date")
     private LocalDate accountCreationDate;
+    @Column
+    private String password;
 }

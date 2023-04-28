@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
+
 import java.util.List;
 
 @Data
@@ -17,6 +18,8 @@ public class AuthorEntity {
     private Long id;
     @Column(name = "author_name")
     private String name;
+    @Column(name = "author_books_nr")
+    private int numberOfBooks;
     @OneToMany(mappedBy = "author", cascade = CascadeType.MERGE)
     @JsonIgnore
     private List<BookEntity> books;
