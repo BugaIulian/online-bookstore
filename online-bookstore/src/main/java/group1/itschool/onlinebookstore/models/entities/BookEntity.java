@@ -1,7 +1,7 @@
 package group1.itschool.onlinebookstore.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import group1.itschool.onlinebookstore.models.dto.BookDTO;
+import group1.itschool.onlinebookstore.util.constants.Genre;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDate;
@@ -32,7 +32,7 @@ public class BookEntity {
     @Column(name = "isbn_code")
     private String codeISBN;
     @Column(name = "genre")
-    private BookDTO.Genre genre;
+    private Genre genre;
     @Column(name = "synopsis")
     private String synopsis;
     @Column(name = "cover_design")

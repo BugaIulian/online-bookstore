@@ -1,5 +1,6 @@
 package group1.itschool.onlinebookstore.models.dto;
 
+import group1.itschool.onlinebookstore.util.constants.Genre;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
@@ -14,7 +15,6 @@ public class BookDTO implements Serializable {
     @Size(min = 2, max = 100, message = "Should contain between 2 and 100 letters.")
     private String title;
     @NotNull
-
     private AuthorDTO author;
     @NotNull
     @NotEmpty
@@ -47,15 +47,4 @@ public class BookDTO implements Serializable {
     @Min(value = 0, message = "The number of specific books in the library, 0 means it's out of stock")
     private int inventory;
 
-    public enum Genre {
-        HORROR,
-        MYSTERY,
-        DRAMA,
-        POETRY,
-        ACTION,
-        FICTION,
-        SATIRE,
-        HISTORICAL,
-        PARODY
-    }
 }
