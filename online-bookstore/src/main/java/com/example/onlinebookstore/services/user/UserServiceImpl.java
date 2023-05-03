@@ -1,17 +1,19 @@
 package com.example.onlinebookstore.services.user;
 
+import com.example.onlinebookstore.exceptions.user.UserCreationException;
 import com.example.onlinebookstore.exceptions.user.UserNotFoundException;
-import com.example.onlinebookstore.exceptions.user.UsernameAlreadyExistsException;
 import com.example.onlinebookstore.models.dto.UserDTO;
-import com.example.onlinebookstore.models.entities.UserEntity;
-import com.example.onlinebookstore.services.email.EmailService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.onlinebookstore.models.dto.auth.LoginRequestDTO;
 import com.example.onlinebookstore.models.dto.auth.RegisterRequestDTO;
+import com.example.onlinebookstore.models.entities.UserEntity;
 import com.example.onlinebookstore.repositories.UserRepository;
+import com.example.onlinebookstore.services.email.EmailService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +40,10 @@ public class UserServiceImpl implements UserService {
             userToBeRegistered.setAccountCreationDate(LocalDate.now());
             userToBeRegistered.setPassword(encodePassword(registerRequestDTO.getPassword()));
             UserEntity userSaved = userRepository.save(userToBeRegistered);
-            emailService.sendRegistrationEmail(userSaved.getEmail());
+            emailService.sendRegistrationEmail(userSaved.getEmail(), userSaved.getUsername());
             return objectMapper.convertValue(userSaved, RegisterRequestDTO.class);
-        } catch (UsernameAlreadyExistsException e) {
-            log.info("Username already in the table");
-            throw new RuntimeException(e);
+        } catch (UserCreationException e) {
+            throw new UserCreationException("Username already assigned");
         }
     }
 
@@ -71,9 +72,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserById(Long id) {
-        UserEntity editedUser;
-        editedUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User to be erased can't be found with the id: " + id));
-        userRepository.deleteById(id);
+        try {
+            userRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println("check this");
+            throw new UserNotFoundException("User to be erased with the id " + id + "can't be found");
+        }
     }
 
     private void updateUserFields(UserDTO userDTO, UserEntity editedUser) {
@@ -94,11 +98,11 @@ public class UserServiceImpl implements UserService {
             String userEmail = registerRequestDTO.getEmail();
             UserEntity existingUserUsername = userRepository.findByUsername(username);
             if (existingUserUsername != null) {
-                throw new UsernameAlreadyExistsException("Username already registered.");
+                throw new UserCreationException("Username already registered.");
             }
             UserEntity existingUserEmail = userRepository.findByEmail(userEmail);
             if (existingUserEmail != null) {
-                throw new UsernameAlreadyExistsException("Email already registered");
+                throw new UserCreationException("Email already registered");
             }
     }
 }
