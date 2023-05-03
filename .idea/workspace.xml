@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e92a543-5245-4be3-83d0-dac8d0b905f3" name="Changes" comment="New Improvements">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/b/d/bd9127138650da1d1d1ca3c97aba72262195ffda" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/b/d/bd9127138650da1d1d1ca3c97aba72262195ffda" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/online-bookstore/src/main/java/com/example/onlinebookstore/configs/SendGridConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/online-bookstore/src/main/java/com/example/onlinebookstore/configs/SendGridConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/online-bookstore/src/main/java/com/example/onlinebookstore/repositories/BookRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/online-bookstore/src/main/java/com/example/onlinebookstore/repositories/BookRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/online-bookstore/src/main/java/com/example/onlinebookstore/services/book/BookServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/online-bookstore/src/main/java/com/example/onlinebookstore/services/book/BookServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/online-bookstore/src/main/java/com/example/onlinebookstore/services/user/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/online-bookstore/src/main/java/com/example/onlinebookstore/services/user/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/online-bookstore/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/online-bookstore/src/main/resources/application.properties" afterDir="false" />
-    </list>
+    <list default="true" id="9e92a543-5245-4be3-83d0-dac8d0b905f3" name="Changes" comment="h" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,7 +21,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="iulian_improvements2" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
