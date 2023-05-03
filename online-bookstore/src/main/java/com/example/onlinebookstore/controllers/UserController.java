@@ -1,6 +1,7 @@
 package com.example.onlinebookstore.controllers;
 
 import com.example.onlinebookstore.models.dto.UserDTO;
+import com.example.onlinebookstore.models.dto.auth.LoginRequestDTO;
 import com.example.onlinebookstore.models.dto.auth.RegisterRequestDTO;
 import com.example.onlinebookstore.services.user.UserService;
 import jakarta.validation.Valid;
@@ -21,6 +22,11 @@ public class UserController {
     @PostMapping("/users/register")
     public ResponseEntity<RegisterRequestDTO> registerUser(@RequestBody @Valid RegisterRequestDTO registerRequestDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerUser(registerRequestDTO));
+    }
+
+    @PostMapping("users/login")
+    public ResponseEntity<LoginRequestDTO> userLogin(@RequestBody @Valid LoginRequestDTO loginRequestDTO) {
+        return ResponseEntity.ok(userService.userLogin(loginRequestDTO));
     }
 
     @PutMapping("/users/{id}")
