@@ -19,7 +19,6 @@ public class UserDTO implements Serializable {
     @NotNull
     @NotEmpty
     private String fullName;
-    @NotNull
     @Past(message = "Date of birth should be in the past")
     private LocalDate dateOfBirth;
     @NotNull

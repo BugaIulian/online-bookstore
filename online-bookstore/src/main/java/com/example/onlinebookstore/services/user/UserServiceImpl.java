@@ -52,6 +52,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public LoginRequestDTO userLogin(LoginRequestDTO loginRequestDTO) {
+        UserEntity userToLogin = objectMapper.convertValue(loginRequestDTO,UserEntity.class);
         return null;
     }
 
