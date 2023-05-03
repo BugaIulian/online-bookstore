@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e92a543-5245-4be3-83d0-dac8d0b905f3" name="Changes" comment="h" />
+    <list default="true" id="9e92a543-5245-4be3-83d0-dac8d0b905f3" name="Changes" comment="Ignored application.properties" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -129,11 +129,51 @@
       <option name="project" value="LOCAL" />
       <updated>1683108540496</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="New Improvements">
+      <created>1683114408116</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1683114408116</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Ignored application.properties">
+      <created>1683114837157</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1683114837157</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Ignored application.properties">
+      <created>1683114944669</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1683114944669</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Ignored application.properties">
+      <created>1683115017696</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1683115017696</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="New Improvements" />
-    <option name="LAST_COMMIT_MESSAGE" value="New Improvements" />
+    <MESSAGE value="Ignored application.properties" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ignored application.properties" />
   </component>
 </project>
