@@ -8,17 +8,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="spring-boot" />
-        <module name="online-bookstore" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="online-bookstore" target="17" />
-      <module name="spring-boot" target="17" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="online-bookstore" options="-parameters" />
       <module name="spring-boot" options="-parameters" />
     </option>
   </component>
