@@ -1,0 +1,18 @@
+Index: online-bookstore/src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Database connection properties\nspring.datasource.url=jdbc:postgresql://localhost:5432/bookstore\nspring.datasource.username=developer\nspring.datasource.password=12345\nspring.datasource.driver-class-name=org.postgresql.Driver\n\n# JPA properties\nspring.jpa.show-sql=true\nspring.jpa.hibernate.ddl-auto=update\nspring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect\n\n# Logging properties\nlogging.level.org.hibernate.SQL=DEBUG\nlogging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE\n\n# Set the username and password for the custom user\nspring.security.user.name=iulian\nspring.security.user.password=12345\n\n# Disable the generation of the default user and password\nspring.security.user.enabled=false\n\n# thymeleaf Check\nspring.thymeleaf.check-template-location=false\n\n#Sendgrid API\n\n\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/online-bookstore/src/main/resources/application.properties b/online-bookstore/src/main/resources/application.properties
+--- a/online-bookstore/src/main/resources/application.properties	
++++ b/online-bookstore/src/main/resources/application.properties	
+@@ -24,6 +24,6 @@
+ spring.thymeleaf.check-template-location=false
+ 
+ #Sendgrid API
+-
++sendgrid.api.key=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
+ 
+ 
