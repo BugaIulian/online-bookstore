@@ -10,13 +10,13 @@ import com.example.onlinebookstore.repositories.UserRepository;
 import com.example.onlinebookstore.services.email.EmailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -72,12 +72,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserById(Long id) {
-        try {
-            userRepository.deleteById(id);
-        } catch (EmptyResultDataAccessException e) {
-            System.out.println("check this");
-            throw new UserNotFoundException("User to be erased with the id " + id + "can't be found");
+        Optional<UserEntity> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("User to be erased with the id: " + id + " can't be found");
         }
+        userRepository.deleteById(id);
     }
 
     private void updateUserFields(UserDTO userDTO, UserEntity editedUser) {

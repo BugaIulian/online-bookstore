@@ -37,7 +37,6 @@ public class BookServiceImpl implements BookService {
         BookEntity savedBookInDB = bookRepository.save(bookToSaveInDB);
         GenreEntity genreToBeSaved = objectMapper.convertValue(bookDTO.getGenre(),GenreEntity.class);
         genreRepository.save(genreToBeSaved);
-
         return objectMapper.convertValue(savedBookInDB, BookDTO.class);
     }
 
@@ -84,6 +83,7 @@ public class BookServiceImpl implements BookService {
      */
 
     private void checkAuthorDuplicates(BookDTO bookDTO, BookEntity bookToSaveInDB) {
+
         int numberOfBooksWritten;
         AuthorEntity author = authorRepository.findByName(bookDTO.getAuthor().getName());
         if (author == null) {
