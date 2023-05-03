@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e92a543-5245-4be3-83d0-dac8d0b905f3" name="Changes" comment="New Improvements">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/8/5/85a33d8249500346ea024ac18abe907a1e805857" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/8/5/85a33d8249500346ea024ac18abe907a1e805857" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/online-bookstore/src/main/java/com/example/onlinebookstore/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/online-bookstore/src/main/java/com/example/onlinebookstore/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/online-bookstore/src/main/java/com/example/onlinebookstore/exceptions/ExceptionHandlerAdvice.java" beforeDir="false" afterPath="$PROJECT_DIR$/online-bookstore/src/main/java/com/example/onlinebookstore/exceptions/ExceptionHandlerAdvice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/online-bookstore/src/main/java/com/example/onlinebookstore/exceptions/user/UserNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/online-bookstore/src/main/java/com/example/onlinebookstore/exceptions/user/UserNotFoundException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/online-bookstore/src/main/java/com/example/onlinebookstore/exceptions/user/UsernameAlreadyExistsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/online-bookstore/src/main/java/com/example/onlinebookstore/exceptions/user/UserCreationException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/online-bookstore/src/main/java/com/example/onlinebookstore/services/email/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/online-bookstore/src/main/java/com/example/onlinebookstore/services/email/EmailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/online-bookstore/src/main/java/com/example/onlinebookstore/services/email/EmailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/online-bookstore/src/main/java/com/example/onlinebookstore/services/email/EmailServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/online-bookstore/src/main/java/com/example/onlinebookstore/services/user/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/online-bookstore/src/main/java/com/example/onlinebookstore/services/user/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/online-bookstore/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/online-bookstore/src/main/resources/application.properties" afterDir="false" />
-    </list>
+    <list default="true" id="9e92a543-5245-4be3-83d0-dac8d0b905f3" name="Changes" comment="New Improvements" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -116,7 +101,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683100613015</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="New Improvements">
+      <created>1683106895706</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1683106895707</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
