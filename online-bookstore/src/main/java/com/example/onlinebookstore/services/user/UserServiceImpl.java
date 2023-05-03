@@ -1,5 +1,6 @@
 package com.example.onlinebookstore.services.user;
 
+import com.example.onlinebookstore.exceptions.user.UsersCredentialsExceptions;
 import com.example.onlinebookstore.exceptions.user.UserCreationException;
 import com.example.onlinebookstore.exceptions.user.UserNotFoundException;
 import com.example.onlinebookstore.models.dto.UserDTO;
@@ -48,12 +49,28 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    /** This is due to be done*/
-
     @Override
     public LoginRequestDTO userLogin(LoginRequestDTO loginRequestDTO) {
-        UserEntity userToLogin = objectMapper.convertValue(loginRequestDTO,UserEntity.class);
-        return null;
+        UserEntity user = userRepository.findByUsername(loginRequestDTO.getUsername());
+        if (user == null) {
+            throw new UserNotFoundException("User not found");
+        }
+        boolean passwordMatch = checkPassword(loginRequestDTO, user);
+        boolean usernameMatch = checkUsername(loginRequestDTO,user);
+
+        if (passwordMatch && usernameMatch) {
+            return loginRequestDTO;
+        } else {
+            throw new UsersCredentialsExceptions("Incorrect Credentials please try again");
+        }
+    }
+
+    private boolean checkUsername(LoginRequestDTO loginRequestDTO, UserEntity user) {
+        return loginRequestDTO.getUsername().equals(user.getUsername());
+    }
+
+    private boolean checkPassword(LoginRequestDTO loginRequestDTO, UserEntity user) {
+        return new BCryptPasswordEncoder().matches(loginRequestDTO.getPassword(), user.getPassword());
     }
 
     @Override

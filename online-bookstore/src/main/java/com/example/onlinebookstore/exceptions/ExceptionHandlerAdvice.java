@@ -1,5 +1,6 @@
 package com.example.onlinebookstore.exceptions;
 
+import com.example.onlinebookstore.exceptions.user.UsersCredentialsExceptions;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.onlinebookstore.exceptions.book.BookNotFoundException;
@@ -39,6 +40,11 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<Object> userNotFound(UserNotFoundException userNotFoundException) {
         return getExceptionResponse(userNotFoundException, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UsersCredentialsExceptions.class)
+    public ResponseEntity<Object> incorrectPassword(UsersCredentialsExceptions usersCredentialsExceptions) {
+        return getExceptionResponse(usersCredentialsExceptions, HttpStatus.UNAUTHORIZED);
     }
 
     private ResponseEntity<Object> getExceptionResponse(RuntimeException runtimeException, HttpStatus httpStatus) {
