@@ -10,12 +10,16 @@ import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Email;
 import com.sendgrid.helpers.mail.objects.Personalization;
 import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
 @Service
 public class EmailServiceImpl implements EmailService {
+    @Value("${email.from}")
+    private String fromEmail;
+
     @Override
     public void sendRegistrationEmail(String newUserEmail, String username) {
 
@@ -41,9 +45,9 @@ public class EmailServiceImpl implements EmailService {
 
     }
 
-    private static Mail setEmailToAndFrom(String newUserEmail, String username) {
+    private Mail setEmailToAndFrom(String newUserEmail, String username) {
 
-        Email from = new Email("iulian.ionut.buga@gmail.com");
+        Email from = new Email(fromEmail);
         Email to = new Email(newUserEmail);
         Mail mail = new Mail();
         Personalization personalization = new Personalization();
