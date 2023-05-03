@@ -4,6 +4,7 @@ import com.example.onlinebookstore.exceptions.user.UserNotFoundException;
 import com.example.onlinebookstore.exceptions.user.UsernameAlreadyExistsException;
 import com.example.onlinebookstore.models.dto.UserDTO;
 import com.example.onlinebookstore.models.entities.UserEntity;
+import com.example.onlinebookstore.services.email.EmailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.onlinebookstore.models.dto.auth.LoginRequestDTO;
 import com.example.onlinebookstore.models.dto.auth.RegisterRequestDTO;
@@ -21,10 +22,12 @@ public class UserServiceImpl implements UserService {
 
     private final ObjectMapper objectMapper;
     private final UserRepository userRepository;
+    private final EmailService emailService;
 
-    public UserServiceImpl(ObjectMapper objectMapper, UserRepository userRepository) {
+    public UserServiceImpl(ObjectMapper objectMapper, UserRepository userRepository, EmailService emailService) {
         this.objectMapper = objectMapper;
         this.userRepository = userRepository;
+        this.emailService = emailService;
     }
 
     @Override
@@ -35,6 +38,7 @@ public class UserServiceImpl implements UserService {
             userToBeRegistered.setAccountCreationDate(LocalDate.now());
             userToBeRegistered.setPassword(encodePassword(registerRequestDTO.getPassword()));
             UserEntity userSaved = userRepository.save(userToBeRegistered);
+            emailService.sendRegistrationEmail(userSaved.getEmail());
             return objectMapper.convertValue(userSaved, RegisterRequestDTO.class);
         } catch (UsernameAlreadyExistsException e) {
             log.info("Username already in the table");
@@ -67,7 +71,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserById(Long id) {
-        UserEntity editedUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User to be erased can't be found with the id: " + id));
+        UserEntity editedUser;
+        editedUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User to be erased can't be found with the id: " + id));
         userRepository.deleteById(id);
     }
 
