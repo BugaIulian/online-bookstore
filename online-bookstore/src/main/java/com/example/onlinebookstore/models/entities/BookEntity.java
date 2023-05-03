@@ -1,10 +1,12 @@
 package com.example.onlinebookstore.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.example.onlinebookstore.util.constants.Genre;
 import jakarta.persistence.*;
 import lombok.Data;
+
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -12,16 +14,11 @@ import java.time.LocalDate;
 @Table(name = "books")
 public class BookEntity {
 
-    /**
-     * Some fields may be erased later in the process of building the app for a better query performance, we will decide later which ones.
-     */
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "title")
     private String title;
-    //@Column(name = "author")
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id")
     private AuthorEntity author;
@@ -31,8 +28,9 @@ public class BookEntity {
     private LocalDate publicationDate;
     @Column(name = "isbn_code")
     private String codeISBN;
-    @Column(name = "genre")
-    private Genre genre;
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "books_genre", joinColumns = @JoinColumn(name = "books_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    private Set<GenreEntity> genres = new HashSet<>();
     @Column(name = "synopsis")
     private String synopsis;
     @Column(name = "cover_design")

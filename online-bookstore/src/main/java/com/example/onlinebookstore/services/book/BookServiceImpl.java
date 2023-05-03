@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -34,8 +35,14 @@ public class BookServiceImpl implements BookService {
         BookEntity bookToSaveInDB = objectMapper.convertValue(bookDTO, BookEntity.class);
         checkAuthorDuplicates(bookDTO, bookToSaveInDB);
         BookEntity savedBookInDB = bookRepository.save(bookToSaveInDB);
-        GenreEntity genreToBeSaved = objectMapper.convertValue(bookDTO.getGenre(),GenreEntity.class);
-        genreRepository.save(genreToBeSaved);
+
+        GenreEntity genreToBeSaved = objectMapper.convertValue(bookDTO.getGenre(), GenreEntity.class);
+        genreToBeSaved = checkIfGenreExistsInDBAndMerge(genreToBeSaved);
+
+        Set<GenreEntity> genres = savedBookInDB.getGenres();
+        genres.add(genreToBeSaved);
+        savedBookInDB.setGenres(genres);
+        bookRepository.save(savedBookInDB);
         return objectMapper.convertValue(savedBookInDB, BookDTO.class);
     }
 
@@ -114,7 +121,7 @@ public class BookServiceImpl implements BookService {
         editedBook.setPublisher(bookDTO.getPublisher());
         editedBook.setPublicationDate(bookDTO.getPublicationDate());
         editedBook.setCodeISBN(bookDTO.getCodeISBN());
-        editedBook.setGenre(bookDTO.getGenre());
+        //editedBook.setGenre(bookDTO.getGenre());
         editedBook.setSynopsis(bookDTO.getSynopsis());
         editedBook.setCoverDesign(bookDTO.getCoverDesign());
         editedBook.setPageCount(bookDTO.getPageCount());
@@ -124,5 +131,21 @@ public class BookServiceImpl implements BookService {
         editedBook.setReview(bookDTO.getReview());
         editedBook.setQrCode(bookDTO.getQrCode());
         editedBook.setInventory(bookDTO.getInventory());
+    }
+
+    private GenreEntity checkIfGenreExistsInDBAndMerge(GenreEntity genreToBeSaved) {
+        List<GenreEntity> iterateRepositoryList = genreRepository.findAll();
+        boolean genreAlreadyExists = false;
+        for (GenreEntity genre : iterateRepositoryList) {
+            if (genre.getName().equals(genreToBeSaved.getName())) {
+                genreAlreadyExists = true;
+                genreToBeSaved = genre;
+                break;
+            }
+        }
+        if (!genreAlreadyExists) {
+            genreRepository.save(genreToBeSaved);
+        }
+        return genreToBeSaved;
     }
 }
