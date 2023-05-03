@@ -9,12 +9,14 @@ import com.sendgrid.SendGrid;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Email;
 import com.sendgrid.helpers.mail.objects.Personalization;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
+@Slf4j
 @Service
 public class EmailServiceImpl implements EmailService {
     @Value("${email.from}")
@@ -32,9 +34,9 @@ public class EmailServiceImpl implements EmailService {
             request.setEndpoint("mail/send");
             request.setBody(mail.build());
             Response response = sg.api(request);
-            System.out.println(response.getStatusCode());
-            System.out.println(response.getBody());
-            System.out.println(response.getHeaders());
+            log.info(String.valueOf(response.getStatusCode()));
+            log.info(response.getBody());
+            log.info(response.getHeaders().toString());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -42,7 +44,7 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void sendOrderEmail(String userEmail, String username) {
-
+        // TODO document why this method is empty
     }
 
     private Mail setEmailToAndFrom(String newUserEmail, String username) {

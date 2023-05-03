@@ -17,5 +17,6 @@ public class SendGridConfiguration {
     }
 
     public SendGridConfiguration() throws ConfigurationException {
+        // TODO document why this constructor is empty
     }
 }

@@ -4,12 +4,13 @@ import com.example.onlinebookstore.exceptions.book.BookNotFoundException;
 import com.example.onlinebookstore.models.dto.BookDTO;
 import com.example.onlinebookstore.models.entities.AuthorEntity;
 import com.example.onlinebookstore.models.entities.BookEntity;
-import com.example.onlinebookstore.repositories.GenreRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.onlinebookstore.models.entities.GenreEntity;
 import com.example.onlinebookstore.repositories.AuthorRepository;
 import com.example.onlinebookstore.repositories.BookRepository;
+import com.example.onlinebookstore.repositories.GenreRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +21,6 @@ public class BookServiceImpl implements BookService {
     private final AuthorRepository authorRepository;
     private final GenreRepository genreRepository;
     private final ObjectMapper objectMapper;
-
-
 
     public BookServiceImpl(BookRepository bookRepository, AuthorRepository authorRepository, GenreRepository genreRepository, ObjectMapper objectMapper) {
         this.bookRepository = bookRepository;
@@ -43,10 +42,14 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDTO> getBooks() {
-        List<BookEntity> libraryStock = bookRepository.findAll();
-        List<BookDTO> libraryStockDTO = new ArrayList<>();
-        libraryStock.forEach(bookEntity -> libraryStockDTO.add(objectMapper.convertValue(bookEntity, BookDTO.class)));
-        return libraryStockDTO;
+        try {
+            List<BookEntity> libraryStock = bookRepository.findAll();
+            List<BookDTO> libraryStockDTO = new ArrayList<>();
+            libraryStock.forEach(bookEntity -> libraryStockDTO.add(objectMapper.convertValue(bookEntity, BookDTO.class)));
+            return libraryStockDTO;
+        } catch (Exception e) {
+            throw new RuntimeException("Error while retrieving books", e);
+        }
     }
 
     @Override
@@ -105,8 +108,9 @@ public class BookServiceImpl implements BookService {
      */
 
     private void updateBookFields(BookDTO bookDTO, BookEntity editedBook) {
+        BookEntity authorBook = objectMapper.convertValue(bookDTO, BookEntity.class);
         editedBook.setTitle(bookDTO.getTitle());
-        //editedBook.setAuthor(bookDTO.getAuthor());
+        editedBook.setAuthor(authorBook.getAuthor());
         editedBook.setPublisher(bookDTO.getPublisher());
         editedBook.setPublicationDate(bookDTO.getPublicationDate());
         editedBook.setCodeISBN(bookDTO.getCodeISBN());
