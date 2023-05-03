@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.onlinebookstore.exceptions.book.BookNotFoundException;
 import com.example.onlinebookstore.exceptions.user.UserNotFoundException;
-import com.example.onlinebookstore.exceptions.user.UsernameAlreadyExistsException;
+import com.example.onlinebookstore.exceptions.user.UserCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,9 +29,9 @@ public class ExceptionHandlerAdvice {
         return getExceptionResponse(bookException, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(UsernameAlreadyExistsException.class)
-    public ResponseEntity<Object> usernameAlreadyExists(UsernameAlreadyExistsException usernameAlreadyExistsException) {
-        return getExceptionResponse(usernameAlreadyExistsException, HttpStatus.CONFLICT);
+    @ExceptionHandler(UserCreationException.class)
+    public ResponseEntity<Object> usernameAlreadyExists(UserCreationException userCreationException) {
+        return getExceptionResponse(userCreationException, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(UserNotFoundException.class)

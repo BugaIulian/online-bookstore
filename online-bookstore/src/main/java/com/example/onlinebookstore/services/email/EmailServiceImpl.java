@@ -9,6 +9,7 @@ import com.sendgrid.SendGrid;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
+import com.sendgrid.helpers.mail.objects.Personalization;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +18,9 @@ import java.io.IOException;
 @Service
 public class EmailServiceImpl implements EmailService {
     @Override
-    public void sendRegistrationEmail(String newUserEmail) {
+    public void sendRegistrationEmail(String newUserEmail, String username) {
 
-        Mail mail = setEmailToAndFrom(newUserEmail);
+        Mail mail = setEmailToAndFrom(newUserEmail, username);
         SendGrid sg = getSendGridApi();
         Request request = new Request();
 
@@ -36,12 +37,19 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 
-    private static Mail setEmailToAndFrom(String newUserEmail) {
+    private static Mail setEmailToAndFrom(String newUserEmail, String username) {
+
         Email from = new Email("iulian.ionut.buga@gmail.com");
-        String subject = "Sending with Sendgrid is fun";
         Email to = new Email(newUserEmail);
-        Content content = new Content("text/plain", "and easy to do it everywhere");
-        return new Mail(from, subject, to, content);
+        Mail mail = new Mail();
+        Personalization personalization = new Personalization();
+        personalization.addTo(to);
+        personalization.addDynamicTemplateData("dynamic_content", username);
+        mail.setFrom(from);
+        mail.setTemplateId("d-820bf308c3c942d881870d01f95dff39");
+        mail.addPersonalization(personalization);
+
+        return mail;
     }
 
     private static SendGrid getSendGridApi() {
