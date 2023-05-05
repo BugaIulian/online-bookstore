@@ -12,8 +12,6 @@ public interface UserService {
 
     LoginRequestDTO userLogin(LoginRequestDTO loginRequestDTO);
 
-    List<UserDTO> getUsers();
-
     UserDTO createUserProfile(Long id, UserDTO userDTO);
 
     void deleteUserById(Long id);

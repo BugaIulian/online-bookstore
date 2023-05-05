@@ -1,11 +1,13 @@
 package com.example.onlinebookstore.controllers;
 
 import com.example.onlinebookstore.models.dto.BookDTO;
+import com.example.onlinebookstore.models.dto.UserDTO;
 import com.example.onlinebookstore.services.book.BookService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -35,5 +37,10 @@ public class BookController {
     public ResponseEntity<Void> deleteBookById(@PathVariable Long id) {
         bookService.deleteBookById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("admin/users")
+    public List<UserDTO> getUsers() {
+        return bookService.getUsers();
     }
 }

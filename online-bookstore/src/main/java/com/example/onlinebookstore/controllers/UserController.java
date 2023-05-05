@@ -34,13 +34,6 @@ public class UserController {
         return ResponseEntity.ok(userService.createUserProfile(id, userDTO));
     }
 
-    /**This API endpoint should be moved to the admin controller, more exactly the BookController, there is no logic reason to have it here*/
-
-    @GetMapping("/users")
-    public List<UserDTO> getUsers() {
-        return userService.getUsers();
-    }
-
     @DeleteMapping("users/{id}")
     public void  deleteUserById(@PathVariable Long id) {
             userService.deleteUserById(id);
