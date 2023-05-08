@@ -1,7 +1,6 @@
 package com.example.onlinebookstore.services.book;
 
 import com.example.onlinebookstore.models.dto.BookDTO;
-import com.example.onlinebookstore.models.dto.UserDTO;
 
 import java.util.List;
 
@@ -15,5 +14,5 @@ public interface BookService {
 
     void deleteBookById(Long id);
 
-    List<UserDTO> getUsers();
+    BookDTO getBooksByTitle(String title);
 }

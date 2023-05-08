@@ -3,7 +3,6 @@ package com.example.onlinebookstore.models.entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,7 +25,7 @@ public class BookEntity {
     private String publisher;
     @Column(name = "publication_date")
     private LocalDate publicationDate;
-    @Column(name = "isbn_code")
+    @Column(name = "isbn_code", unique = true)
     private String codeISBN;
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "books_genre", joinColumns = @JoinColumn(name = "books_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))

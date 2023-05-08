@@ -2,7 +2,6 @@ package com.example.onlinebookstore.models.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 

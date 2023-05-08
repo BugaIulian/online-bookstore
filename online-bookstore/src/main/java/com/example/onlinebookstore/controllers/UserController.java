@@ -1,5 +1,6 @@
 package com.example.onlinebookstore.controllers;
 
+import com.example.onlinebookstore.models.dto.OrderDTO;
 import com.example.onlinebookstore.models.dto.UserDTO;
 import com.example.onlinebookstore.models.dto.auth.LoginRequestDTO;
 import com.example.onlinebookstore.models.dto.auth.RegisterRequestDTO;
@@ -31,11 +32,22 @@ public class UserController {
 
     @PutMapping("/users/{id}")
     public ResponseEntity<UserDTO> createUserProfile(@PathVariable Long id, @RequestBody @Valid UserDTO userDTO) {
-        return ResponseEntity.ok(userService.createUserProfile(id, userDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUserProfile(id, userDTO));
     }
 
     @DeleteMapping("users/{id}")
-    public void  deleteUserById(@PathVariable Long id) {
-            userService.deleteUserById(id);
+    public ResponseEntity<Void> deleteUserById(@PathVariable Long id) {
+        userService.deleteUserById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("admin/users")
+    public List<UserDTO> getUsers() {
+        return userService.getUsers();
+    }
+
+    @PostMapping("users/order/{userId}")
+    public ResponseEntity<OrderDTO> createOrderById(@PathVariable Long userId, @RequestBody @Valid OrderDTO orderDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createOrder(userId, orderDTO));
     }
 }

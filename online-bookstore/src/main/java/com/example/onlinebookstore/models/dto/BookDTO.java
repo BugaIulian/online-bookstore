@@ -1,9 +1,8 @@
 package com.example.onlinebookstore.models.dto;
 
-import com.example.onlinebookstore.util.constants.Genre;
+import com.example.onlinebookstore.util.enums.Genre;
 import jakarta.validation.constraints.*;
 import lombok.Data;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -46,5 +45,4 @@ public class BookDTO implements Serializable {
     @NotNull
     @Min(value = 0, message = "The number of specific books in the library, 0 means it's out of stock")
     private int inventory;
-
 }

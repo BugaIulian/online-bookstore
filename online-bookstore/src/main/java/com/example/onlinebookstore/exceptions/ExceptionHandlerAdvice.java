@@ -1,11 +1,12 @@
 package com.example.onlinebookstore.exceptions;
 
+import com.example.onlinebookstore.exceptions.book.BookNotFoundException;
+import com.example.onlinebookstore.exceptions.book.ISBNDuplicateException;
+import com.example.onlinebookstore.exceptions.user.UserNotFoundException;
 import com.example.onlinebookstore.exceptions.user.UserPasswordExceptions;
+import com.example.onlinebookstore.exceptions.user.UserRegisterException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.example.onlinebookstore.exceptions.book.BookNotFoundException;
-import com.example.onlinebookstore.exceptions.user.UserNotFoundException;
-import com.example.onlinebookstore.exceptions.user.UserRegisterException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,6 +46,11 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(UserPasswordExceptions.class)
     public ResponseEntity<Object> incorrectPassword(UserPasswordExceptions userPasswordExceptions) {
         return getExceptionResponse(userPasswordExceptions, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(ISBNDuplicateException.class)
+    public ResponseEntity<Object> duplicateISBN(ISBNDuplicateException ISBNDuplicateException) {
+        return getExceptionResponse(ISBNDuplicateException, HttpStatus.CONFLICT);
     }
 
     private ResponseEntity<Object> getExceptionResponse(RuntimeException runtimeException, HttpStatus httpStatus) {

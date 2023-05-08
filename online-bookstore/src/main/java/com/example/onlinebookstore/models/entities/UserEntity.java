@@ -1,9 +1,11 @@
 package com.example.onlinebookstore.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -28,4 +30,7 @@ public class UserEntity {
     private LocalDate accountCreationDate;
     @Column
     private String password;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<OrderEntity> orders;
 }
