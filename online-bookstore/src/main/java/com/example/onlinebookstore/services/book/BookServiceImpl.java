@@ -2,12 +2,15 @@ package com.example.onlinebookstore.services.book;
 
 import com.example.onlinebookstore.exceptions.book.BookNotFoundException;
 import com.example.onlinebookstore.models.dto.BookDTO;
+import com.example.onlinebookstore.models.dto.UserDTO;
 import com.example.onlinebookstore.models.entities.AuthorEntity;
 import com.example.onlinebookstore.models.entities.BookEntity;
 import com.example.onlinebookstore.models.entities.GenreEntity;
+import com.example.onlinebookstore.models.entities.UserEntity;
 import com.example.onlinebookstore.repositories.AuthorRepository;
 import com.example.onlinebookstore.repositories.BookRepository;
 import com.example.onlinebookstore.repositories.GenreRepository;
+import com.example.onlinebookstore.repositories.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +25,14 @@ public class BookServiceImpl implements BookService {
     private final AuthorRepository authorRepository;
     private final GenreRepository genreRepository;
     private final ObjectMapper objectMapper;
+    private final UserRepository userRepository;
 
-    public BookServiceImpl(BookRepository bookRepository, AuthorRepository authorRepository, GenreRepository genreRepository, ObjectMapper objectMapper) {
+    public BookServiceImpl(BookRepository bookRepository, AuthorRepository authorRepository, GenreRepository genreRepository, ObjectMapper objectMapper, UserRepository userRepository) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
         this.genreRepository = genreRepository;
         this.objectMapper = objectMapper;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -84,6 +89,14 @@ public class BookServiceImpl implements BookService {
             targetedBookAuthor.setNumberOfBooks(numberOfBooksWritten - 1);
             authorRepository.save(targetedBookAuthor);
         }
+    }
+
+    @Override
+    public List<UserDTO> getUsers() {
+        List<UserEntity> userEntities = userRepository.findAll();
+        List<UserDTO> userDTOS = new ArrayList<>();
+        userEntities.forEach(userEntity -> userDTOS.add(objectMapper.convertValue(userEntity, UserDTO.class)));
+        return userDTOS;
     }
 
     /**

@@ -1,8 +1,8 @@
 package com.example.onlinebookstore.services.user;
 
-import com.example.onlinebookstore.exceptions.user.UsersCredentialsExceptions;
-import com.example.onlinebookstore.exceptions.user.UserCreationException;
+import com.example.onlinebookstore.exceptions.user.UserRegisterException;
 import com.example.onlinebookstore.exceptions.user.UserNotFoundException;
+import com.example.onlinebookstore.exceptions.user.UserPasswordExceptions;
 import com.example.onlinebookstore.models.dto.UserDTO;
 import com.example.onlinebookstore.models.dto.auth.LoginRequestDTO;
 import com.example.onlinebookstore.models.dto.auth.RegisterRequestDTO;
@@ -13,11 +13,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -34,71 +32,48 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public RegisterRequestDTO registerUser(RegisterRequestDTO registerRequestDTO) {
-        try {
-            checkIfUserIsAlreadyRegistered(registerRequestDTO);
-            UserEntity userToBeRegistered = objectMapper.convertValue(registerRequestDTO, UserEntity.class);
-            userToBeRegistered.setAccountCreationDate(LocalDate.now());
-            userToBeRegistered.setPassword(encodePassword(registerRequestDTO.getPassword()));
-            UserEntity userSaved = userRepository.save(userToBeRegistered);
-            emailService.sendRegistrationEmail(userSaved.getEmail(), userSaved.getUsername());
-            return objectMapper.convertValue(userSaved, RegisterRequestDTO.class);
-        } catch (UserCreationException e) {
-            throw new UserCreationException("Username already assigned");
-        }
-    }
 
+        UserEntity newUser = userRepository.findByUsername(registerRequestDTO.getUsername());
+        checkNewUserForUsernameAndEmailForDuplicates(registerRequestDTO, newUser);
+        UserEntity userSaved = saveNewUserToUsersTableAndEncodePassword(registerRequestDTO);
+        emailService.sendRegistrationEmail(userSaved.getEmail(), userSaved.getUsername());
+        return objectMapper.convertValue(userSaved, RegisterRequestDTO.class);
+    }
 
     @Override
     public LoginRequestDTO userLogin(LoginRequestDTO loginRequestDTO) {
-        UserEntity user = userRepository.findByUsername(loginRequestDTO.getUsername());
-        if (user == null) {
+
+        UserEntity userLogin = userRepository.findByUsername(loginRequestDTO.getUsername());
+        if (userLogin == null) {
             throw new UserNotFoundException("User not found");
         }
-        boolean passwordMatch = checkPassword(loginRequestDTO, user);
-        boolean usernameMatch = checkUsername(loginRequestDTO,user);
 
-        if (passwordMatch && usernameMatch) {
+        if (checkUserPasswordForLogin(loginRequestDTO, userLogin) && checkUsernameForLogin(loginRequestDTO, userLogin)) {
             return loginRequestDTO;
         } else {
-            throw new UsersCredentialsExceptions("Incorrect Credentials please try again");
+            throw new UserPasswordExceptions("Incorrect password, please try again");
         }
     }
 
-    private boolean checkUsername(LoginRequestDTO loginRequestDTO, UserEntity user) {
-        return loginRequestDTO.getUsername().equals(user.getUsername());
-    }
-
-    private boolean checkPassword(LoginRequestDTO loginRequestDTO, UserEntity user) {
-        return new BCryptPasswordEncoder().matches(loginRequestDTO.getPassword(), user.getPassword());
-    }
-
     @Override
-    public List<UserDTO> getUsers() {
-        List<UserEntity> userEntities = userRepository.findAll();
-        List<UserDTO> userDTOS = new ArrayList<>();
-        userEntities.forEach(userEntity -> userDTOS.add(objectMapper.convertValue(userEntity, UserDTO.class)));
-        return userDTOS;
-    }
-
-    @Override
+    @Transactional
     public UserDTO createUserProfile(Long id, UserDTO userDTO) {
-        UserEntity editedUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
-        updateUserFields(userDTO, editedUser);
-        UserEntity editedUserSaved = userRepository.save(editedUser);
-        return objectMapper.convertValue(editedUserSaved, UserDTO.class);
+        UserEntity userProfile = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
+        updateUserProfile(userDTO, userProfile);
+        userProfile = userRepository.save(userProfile);
+        return objectMapper.convertValue(userProfile, UserDTO.class);
     }
 
     @Override
+    @Transactional
     public void deleteUserById(Long id) {
-        Optional<UserEntity> user = userRepository.findById(id);
-        if (user.isEmpty()) {
-            throw new UserNotFoundException("User to be erased with the id: " + id + " can't be found");
-        }
+        userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User to be erased with the id:" + id + "can't be found"));
         userRepository.deleteById(id);
     }
 
-    private void updateUserFields(UserDTO userDTO, UserEntity editedUser) {
+    private void updateUserProfile(UserDTO userDTO, UserEntity editedUser) {
         editedUser.setUsername(userDTO.getUsername());
         editedUser.setFullName(userDTO.getFullName());
         editedUser.setEmail(userDTO.getEmail());
@@ -110,17 +85,29 @@ public class UserServiceImpl implements UserService {
         return new BCryptPasswordEncoder().encode(password);
     }
 
-    private void checkIfUserIsAlreadyRegistered(RegisterRequestDTO registerRequestDTO) {
+    private void checkNewUserForUsernameAndEmailForDuplicates(RegisterRequestDTO registerRequestDTO, UserEntity existingUserUsername) {
+        if (existingUserUsername != null) {
+            throw new UserRegisterException("Username already registered.");
+        }
+        UserEntity existingUserEmail = userRepository.findByEmail(registerRequestDTO.getEmail());
+        if (existingUserEmail != null) {
+            throw new UserRegisterException("Email already registered.");
+        }
+    }
 
-            String username = registerRequestDTO.getUsername();
-            String userEmail = registerRequestDTO.getEmail();
-            UserEntity existingUserUsername = userRepository.findByUsername(username);
-            if (existingUserUsername != null) {
-                throw new UserCreationException("Username already registered.");
-            }
-            UserEntity existingUserEmail = userRepository.findByEmail(userEmail);
-            if (existingUserEmail != null) {
-                throw new UserCreationException("Email already registered");
-            }
+    private UserEntity saveNewUserToUsersTableAndEncodePassword(RegisterRequestDTO registerRequestDTO) {
+        UserEntity newUser;
+        newUser = objectMapper.convertValue(registerRequestDTO, UserEntity.class);
+        newUser.setAccountCreationDate(LocalDate.now());
+        newUser.setPassword(encodePassword(registerRequestDTO.getPassword()));
+        return userRepository.save(newUser);
+    }
+
+    private boolean checkUsernameForLogin(LoginRequestDTO loginRequestDTO, UserEntity user) {
+        return loginRequestDTO.getUsername().equals(user.getUsername());
+    }
+
+    private boolean checkUserPasswordForLogin(LoginRequestDTO loginRequestDTO, UserEntity user) {
+        return new BCryptPasswordEncoder().matches(loginRequestDTO.getPassword(), user.getPassword());
     }
 }
