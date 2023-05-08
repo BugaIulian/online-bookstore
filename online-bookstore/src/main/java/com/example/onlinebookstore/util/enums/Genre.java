@@ -1,4 +1,4 @@
-package com.example.onlinebookstore.util.constants;
+package com.example.onlinebookstore.util.enums;
 
 public enum Genre {
     HORROR,

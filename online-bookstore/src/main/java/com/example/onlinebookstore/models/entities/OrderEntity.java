@@ -13,9 +13,11 @@ public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "phone_number")
+    private String phoneNumber;
     @Column(name = "product_name")
     private String productName;
-    //@ManyToOne(fetch = FetchType.LAZY)
-   // @JoinColumn(name = "user_id")
-    //private UserEntity user;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 }

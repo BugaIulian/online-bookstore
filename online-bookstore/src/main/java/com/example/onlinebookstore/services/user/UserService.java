@@ -1,5 +1,6 @@
 package com.example.onlinebookstore.services.user;
 
+import com.example.onlinebookstore.models.dto.OrderDTO;
 import com.example.onlinebookstore.models.dto.UserDTO;
 import com.example.onlinebookstore.models.dto.auth.LoginRequestDTO;
 import com.example.onlinebookstore.models.dto.auth.RegisterRequestDTO;
@@ -15,4 +16,8 @@ public interface UserService {
     UserDTO createUserProfile(Long id, UserDTO userDTO);
 
     void deleteUserById(Long id);
+
+    List<UserDTO> getUsers();
+
+    OrderDTO createOrder(Long userId, OrderDTO orderDTO);
 }

@@ -1,7 +1,5 @@
 package com.example.onlinebookstore.services.email;
 
-import com.example.onlinebookstore.configs.SendGridConfiguration;
-import com.example.onlinebookstore.exceptions.sendgrid.SendGridAPINotFoundException;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
 import com.sendgrid.Response;
@@ -10,10 +8,8 @@ import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Email;
 import com.sendgrid.helpers.mail.objects.Personalization;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 
 @Slf4j
@@ -22,11 +18,14 @@ public class EmailServiceImpl implements EmailService {
     @Value("${email.from}")
     private String fromEmail;
 
+    @Value("${sendgrid.api.key}")
+    private String sgApiKey;
+
     @Override
     public void sendRegistrationEmail(String newUserEmail, String username) {
 
         Mail mail = setEmailToAndFrom(newUserEmail, username);
-        SendGrid sg = getSendGridApi();
+        SendGrid sg = new SendGrid(sgApiKey);
         Request request = new Request();
 
         try {
@@ -58,17 +57,6 @@ public class EmailServiceImpl implements EmailService {
         mail.setFrom(from);
         mail.setTemplateId("d-820bf308c3c942d881870d01f95dff39");
         mail.addPersonalization(personalization);
-
         return mail;
-    }
-
-    private static SendGrid getSendGridApi() {
-        SendGridConfiguration configSendGrid;
-        try {
-            configSendGrid = new SendGridConfiguration();
-        } catch (ConfigurationException e) {
-            throw new SendGridAPINotFoundException("No API defined in the application.properties file");
-        }
-        return new SendGrid(configSendGrid.getStringAPIKey());
     }
 }

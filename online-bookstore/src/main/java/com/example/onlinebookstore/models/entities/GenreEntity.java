@@ -1,9 +1,8 @@
 package com.example.onlinebookstore.models.entities;
 
-import com.example.onlinebookstore.util.constants.Genre;
+import com.example.onlinebookstore.util.enums.Genre;
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.util.HashSet;
 import java.util.Set;
 
